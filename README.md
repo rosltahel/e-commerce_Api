@@ -4,17 +4,56 @@
 
 <img width="1138" height="817" alt="لقطة شاشة 2025-10-21 155358" src="https://github.com/user-attachments/assets/26903b3a-e29d-458a-9590-1b7e221aef71" />
 
-## 📖 Overview
-**Cool E-Commerce API** is a RESTful backend that powers an online store.  
-It supports managing **Products**, **Orders**, and **Cities**, and includes **live interactive documentation** using **Swagger UI**.
+# 🧠 Swagger API Practice Project
 
-Built with:
-- 🟢 Node.js + Express  
-- 📘 OpenAPI (Swagger 3.0)  
-- ⚙️ YAML Documentation  
-- 🌐 CORS Enabled  
+## 📖 Overview
+This project is a **practice API** built to explore and understand how **Swagger (OpenAPI)** works.  
+It demonstrates how to document REST APIs, visualize them using **Swagger UI**, and test endpoints interactively.
 
 ---
+
+## 🚀 What I Learned
+✅ How to create an OpenAPI (YAML) specification  
+✅ How to serve Swagger documentation in a Node.js + Express app  
+✅ How to test API endpoints directly from the Swagger UI  
+✅ How to organize routes and schemas for clean documentation  
+
+---
+
+## ⚙️ Tech Stack
+
+| Category | Technology |
+|-----------|-------------|
+| Backend | Node.js, Express |
+| API Docs | Swagger UI (OpenAPI 3.0) |
+| Format | YAML, JSON |
+| Tools | VS Code, npm, Git |
+
+---
+
+## 🧩 Project Description
+This API simulates a simple e-commerce system to practice documenting endpoints with Swagger UI.  
+It includes endpoints for:
+- **Products**
+- **Orders**
+- **Cities**
+
+---
+
+## 💻 How to Run the Project
+
+```bash
+# Clone this repository
+git clone https://github.com/rosltahel/e-commerce_Api.git
+cd e-commerce_Api
+
+# Install dependencies
+npm install
+
+# Start the server
+node index.js
+
+
 
 ## 🚀 Features
 ✅ Retrieve, create, update, and delete **products, orders, and cities**  
