@@ -1,0 +1,230 @@
+openapi: 3.0.3
+info:
+  title: Cool e-commerce
+  description: API for buying and selling goods/services over the internet.
+  version: 1.0.0
+servers:
+  - url: http://localhost:4000/api/v1
+paths:
+  /orders:
+    get:
+      summary: Retrieve all orders
+      tags: [Orders]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Order' }
+    post:
+      summary: Create an order
+      tags: [Orders]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/OrderCreate' }
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Order' }
+  /orders/{id}:
+    get:
+      summary: Get order by ID
+      tags: [Orders]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Order' }
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+
+  /products:
+    get:
+      summary: List products
+      tags: [Products]
+      parameters:
+        - in: query
+          name: q
+          description: Search query
+          schema: { type: string }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Product' }
+  /products/{id}:
+    get:
+      summary: Get product by ID
+      tags: [Products]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Product' }
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+
+  /cities:
+    get:
+      summary: Get all cities
+      tags: [Cities]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/City' }
+    post:
+      summary: Create city
+      tags: [Cities]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CityCreate' }
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/City' }
+  /cities/{id}:
+    get:
+      summary: GET city by ID
+      tags: [Cities]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/City' }
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+    put:
+      summary: Update city
+      tags: [Cities]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CityUpdate' }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/City' }
+    delete:
+      summary: Delete city
+      tags: [Cities]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        '204':
+          description: No Content
+
+components:
+  schemas:
+    Product:
+      type: object
+      required: [id, name, price]
+      properties:
+        id: { type: string, example: "prd_123" }
+        name: { type: string, example: "Keyboard" }
+        price: { type: number, format: float, example: 49.99 }
+        currency: { type: string, example: "USD" }
+        inStock: { type: boolean, example: true }
+    OrderItem:
+      type: object
+      required: [productId, quantity]
+      properties:
+        productId: { type: string, example: "prd_123" }
+        quantity: { type: integer, minimum: 1, example: 2 }
+    Order:
+      type: object
+      required: [id, status, items]
+      properties:
+        id: { type: string, example: "ord_001" }
+        status: { type: string, enum: [pending, paid, shipped, cancelled], example: "pending" }
+        items:
+          type: array
+          items: { $ref: '#/components/schemas/OrderItem' }
+        total: { type: number, format: float, example: 99.98 }
+        createdAt: { type: string, format: date-time }
+    OrderCreate:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items: { $ref: '#/components/schemas/OrderItem' }
+    City:
+      type: object
+      required: [id, name, countryCode, population]
+      properties:
+        id: { type: integer, example: 1 }
+        name: { type: string, example: "Amman" }
+        countryCode: { type: string, example: "JO" }
+        district: { type: string, example: "Capital" }
+        population: { type: integer, example: 4000000 }
+    CityCreate:
+      type: object
+      required: [name, countryCode]
+      properties:
+        name: { type: string }
+        countryCode: { type: string }
+        district: { type: string }
+        population: { type: integer }
+    CityUpdate:
+      allOf:
+        - $ref: '#/components/schemas/CityCreate'
+    Error:
+      type: object
+      properties:
+        message: { type: string }
+        code: { type: string }
