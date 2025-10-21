@@ -1,4 +1,4 @@
-# 🛍️ Cool E-Commerce API
+# 🛍️ Swagger API Project
 
 
 
